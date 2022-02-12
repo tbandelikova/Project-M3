@@ -101,6 +101,15 @@ h6 {
     background-color: white;
 }
 
+.currency li:hover {
+    cursor: pointer;
+}
+
+.currency li.chosen {
+    color: #FFFFFF;
+    background-color: #833AE0;
+}
+
 .inp-cur {
     margin-top: 20px;
     border: 1px solid #E5E5E5;
