@@ -46,8 +46,8 @@ function getCurrencyCourse() {
         .then(response => response.json())
         .then(data => {
             let ratesEl = data.rates[symbols];
-            let result = (available.value * ratesEl).toFixed(4);
-            let reverseResult = (desirable.value / ratesEl).toFixed(4);
+            let result = (available.value / ratesEl).toFixed(4);
+            // let reverseResult = (desirable.value / ratesEl).toFixed(4);
             document.querySelector('.available span').innerHTML = `1 ${symbols} = ${(1 / ratesEl).toFixed(4)} ${base}`;
             document.querySelector('.desirable span').innerHTML = `1 ${base} = ${ratesEl.toFixed(4)} ${symbols}`;
             // available.value = reverseResult;
