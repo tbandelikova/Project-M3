@@ -35,40 +35,30 @@ document.querySelectorAll('input').forEach(item => {
             }
         }
     })
-})
+}) 
 
 function getCurrencyCourse(isAvailable = true) {
-    let base = document.querySelector('.desirable li.chosen').innerHTML;
-    let symbols = document.querySelector('.available li.chosen').innerHTML;
-    console.log(isAvailable);
+    let right = document.querySelector('.desirable li.chosen').innerHTML;
+    let left = document.querySelector('.available li.chosen').innerHTML;
 
-    // if (!isAvailable) {
-    //     let t = base;
-    //     base = symbols;
-    //     symbols = t;
-    // }  
-    if (base == symbols) {
-        document.querySelector('.available span').innerHTML = `1 ${symbols} = 1.0000 ${base}`;
-        document.querySelector('.desirable span').innerHTML = `1 ${base} = 1.0000 ${symbols}`;
+    if (right == left) {
+        document.querySelector('.available span').innerHTML = `1 ${left} = 1.0000 ${right}`;
+        document.querySelector('.desirable span').innerHTML = `1 ${right} = 1.0000 ${left}`;
         desirable.value = available.value;
     } else {
-        fetch(URL + `/latest?base=${base}&symbols=${symbols}`)
+        fetch(URL + `/latest?base=${right}&symbols=${left}`)
         .then(response => response.json())
         .then(data => {
-            let ratesEl = data.rates[symbols];
-            let result = (available.value / ratesEl).toFixed(4);
-            
-            document.querySelector('.available span').innerHTML = `1 ${symbols} = ${(1 / ratesEl).toFixed(4)} ${base}`;
-            document.querySelector('.desirable span').innerHTML = `1 ${base} = ${ratesEl.toFixed(4)} ${symbols}`;
+            let ratesEl = data.rates[left];
 
-          if (isAvailable) {
-            desirable.value = result;
-            
-          } else {
-            available.value = result;
-          }
-            
-            
+            document.querySelector('.available span').innerHTML = `1 ${left} = ${(1 / ratesEl).toFixed(4)} ${right}`;
+            document.querySelector('.desirable span').innerHTML = `1 ${right} = ${ratesEl.toFixed(4)} ${left}`;
+
+            if(isAvailable) {
+                return desirable.value = (available.value / ratesEl).toFixed(4);
+            } else {
+                return available.value = (desirable.value * ratesEl).toFixed(4);
+                }
         })
         .catch(error => {
             alert(`Произошла ошибка: ${error.message}`);
