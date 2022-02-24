@@ -1,4 +1,4 @@
-const URL = 'https://api.exchangerate.host';
+const BASE_URL = 'https://api.exchangerate.host';
 let available = document.querySelector('.available input');
 let desirable = document.querySelector('.desirable input');
 let currencyAv = document.querySelectorAll('.available li');
@@ -12,17 +12,17 @@ currencyAv.forEach(item => {
         })
         event.target.classList.add('chosen');
         getCurrencyCourse(true);
-    })
+    });
 });
 
 currencyDes.forEach(item => {
     item.addEventListener('click', (event) => {
         currencyDes.forEach(item => {
             item.classList.remove('chosen');
-        })
+        });
         event.target.classList.add('chosen');
         getCurrencyCourse(true);
-    })
+    });
 });
 
 document.querySelectorAll('input').forEach(item => {
@@ -34,8 +34,8 @@ document.querySelectorAll('input').forEach(item => {
                 getCurrencyCourse(false);
             }
         }
-    })
-}) 
+    });
+}); 
 
 function getCurrencyCourse(isAvailable = true) {
     let right = document.querySelector('.desirable li.chosen').innerHTML;
@@ -46,7 +46,7 @@ function getCurrencyCourse(isAvailable = true) {
         document.querySelector('.desirable span').innerHTML = `1 ${right} = 1.0000 ${left}`;
         desirable.value = available.value;
     } else {
-        fetch(URL + `/latest?base=${right}&symbols=${left}`)
+        fetch(BASE_URL + `/latest?base=${right}&symbols=${left}`)
         .then(response => response.json())
         .then(data => {
             let ratesEl = data.rates[left];
